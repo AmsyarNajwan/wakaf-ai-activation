@@ -1,129 +1,89 @@
+
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ms">
 <head>
-    <meta charset="UTF-8">
-    <title>AI System Activation</title>
+<meta charset="UTF-8">
+<title>Sistem AI Wakaf</title>
 
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle at center, #020617, #000000);
-            font-family: 'Courier New', monospace;
-            color: #00ffff;
-        }
+<style>
 
-        .container {
-            text-align: center;
-            border: 2px solid #00ffff;
-            padding: 50px;
-            border-radius: 10px;
-            box-shadow: 0 0 30px #00ffff;
-            width: 600px;
-        }
+body{
+background:black;
+color:#00ffff;
+font-family:monospace;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+text-align:center;
+}
 
-        h1 {
-            letter-spacing: 4px;
-            margin-bottom: 20px;
-        }
+.scene{
+display:none;
+font-size:28px;
+line-height:1.6;
+}
 
-        .system {
-            font-size: 14px;
-            color: #7df9ff;
-            margin-bottom: 20px;
-        }
+.active{
+display:block;
+}
 
-        input {
-            background: black;
-            border: 1px solid #00ffff;
-            color: #00ffff;
-            padding: 12px;
-            font-size: 20px;
-            width: 250px;
-            text-align: center;
-        }
+input{
+padding:10px;
+font-size:20px;
+text-align:center;
+background:black;
+border:1px solid cyan;
+color:white;
+}
 
-        button {
-            margin-left: 10px;
-            padding: 12px 20px;
-            font-size: 18px;
-            background: #00ffff;
-            border: none;
-            cursor: pointer;
-        }
+button{
+padding:10px 20px;
+font-size:18px;
+margin-top:20px;
+}
 
-        button:hover {
-            background: #00cccc;
-        }
-
-        .result {
-            margin-top: 30px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-    </style>
+</style>
 </head>
 
 <body>
 
-    <div class="container">
-
-        <h1>AI SYSTEM INITIALIZING</h1>
-
-        <div class="system">
-            CONNECTING DATABASE... <br>
-            SCANNING GENERATION DATA... <br>
-            SYSTEM LOCKED 🔒
-        </div>
-
-        <p>ENTER ACCESS PASSWORD</p>
-
-        <input type="password" id="password" placeholder="ACCESS CODE">
-        <button onclick="checkPassword()">ENTER</button>
-
-        <div class="result" id="result"></div>
-
-    </div>
-
-    <script>
-
-        function checkPassword() {
-
-            let pass = document.getElementById("password").value;
-            let result = document.getElementById("result");
-
-            if (pass === "WAKAF2026") {
-
-                result.innerHTML = "ACCESS GRANTED <br><br> SYSTEM ACTIVATED";
-
-                setTimeout(function () {
-
-                    document.body.innerHTML = `
-<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:black;color:#00ffff;font-family:Courier New;text-align:center">
-<div>
-<h1 style="font-size:60px;">HIMPUNAN SISWA</h1>
-<h2 style="font-size:40px;">DUN WAKAF MEMPELAM</h2>
-<p style="font-size:25px;margin-top:30px;">MEMBANGUN GENERASI • MEMPERKASA KOMUNITI</p>
+<div id="scene1" class="scene active">
+MEMULAKAN SISTEM...<br>
+MENYAMBUNG KE PANGKALAN DATA...
 </div>
+
+<div id="scene2" class="scene">
+MEMUATKAN DATA GENERASI<br>
+WAKAF MEMPELAM...
 </div>
-`
 
-                }, 2000)
+<div id="scene3" class="scene">
+SISTEM DIKUNCI 🔒<br><br>
+SILA MASUKKAN KATA LALUAN
+<br><br>
+<input type="password" id="password">
+<br>
+<button onclick="checkPassword()">ENTER</button>
+</div>
 
-            } else {
+<div id="scene4" class="scene">
+MENGIMBAS IDENTITI...
+</div>
 
-                result.innerHTML = "ACCESS DENIED";
+<div id="scene5" class="scene">
+AKSES DILULUSKAN
+</div>
 
-            }
+<div id="scene6" class="scene">
+<h1>HIMPUNAN SISWA</h1>
+<h2>DUN WAKAF MEMPELAM</h2>
+<p>MEMBANGUN GENERASI • MEMPERKASA KOMUNITI</p>
+</div>
 
-        }
+<audio id="voice" src="welcome-ai.mp3"></audio>
 
-    </script>
+<script src="script.js"></script>
 
 </body>
-
 </html>
