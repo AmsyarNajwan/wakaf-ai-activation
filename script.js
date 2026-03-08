@@ -1,4 +1,3 @@
-
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
@@ -7,7 +6,6 @@ canvas.height = window.innerHeight;
 
 const letters = "01";
 const fontSize = 18;
-
 const columns = canvas.width / fontSize;
 
 const drops = [];
@@ -15,6 +13,8 @@ const drops = [];
 for (let x = 0; x < columns; x++) {
     drops[x] = 1;
 }
+
+/* MATRIX BACKGROUND */
 
 function draw() {
 
@@ -35,57 +35,199 @@ function draw() {
         }
 
         drops[i]++;
-
     }
-
 }
 
 setInterval(draw, 33);
 
 
+/* START SYSTEM */
+
+function startSystem() {
+
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("first_bgm").play();
+    document.getElementById("load_system").play();
+    let load_bar = document.getElementById("load_bar");
+
+    load_bar.currentTime = 0;
+    load_bar.play();
+
+    setTimeout(() => {
+        load_bar.pause();
+        load_bar.currentTime = 0;
+    }, 3000); // 3000ms = 3 saat
+    setTimeout(() => {
+        document.getElementById("sambungan").play();
+    }, 3500);
+
+
+
+    setTimeout(() => {
+        document.getElementById("voice").play();
+    }, 6000);
+
+    startLoading();
+}
+
+
+/* LOADING BAR */
+
+function startLoading() {
+
+    let progress = 0;
+    let bar = document.getElementById("progressBar");
+    let percent = document.getElementById("percent");
+
+    let interval = setInterval(() => {
+
+        progress++;
+
+        bar.style.width = progress + "%";
+        percent.innerText = progress + "%";
+
+        if (progress >= 100) {
+
+            clearInterval(interval);
+
+            showScene("scene2");
+
+            setTimeout(() => {
+                showScene("scene3");
+            }, 3000);
+
+        }
+
+    }, 30);
+}
+
+
+/* SCENE CONTROL */
 
 function showScene(id) {
 
     document.querySelectorAll(".scene").forEach(scene => {
-        scene.classList.remove("active")
-    })
+        scene.classList.remove("active");
+    });
 
-    document.getElementById(id).classList.add("active")
-
+    document.getElementById(id).classList.add("active");
 }
 
-setTimeout(() => {
-    showScene("scene2")
-}, 2000)
 
-setTimeout(() => {
-    showScene("scene3")
-}, 4000)
+/* PASSWORD CHECK */
 
 function checkPassword() {
 
-    let pass = document.getElementById("password").value
+    let pass = document.getElementById("password").value;
 
     if (pass === "WAKAF2026") {
 
-        showScene("scene4")
+        showScene("scene4");
+        startScan()
 
         setTimeout(() => {
-            showScene("scene5")
-        }, 2000)
+            showScene("scene5");
+        }, 2000);
 
         setTimeout(() => {
 
-            document.getElementById("voice").play()
+            showScene("scene6");
+            document.getElementById("bgm").play();
+            let load = document.getElementById("welcome_load");
+            load.play();
 
-            showScene("scene6")
-
-        }, 4000)
+        }, 6000);
 
     } else {
 
-        alert("Kata laluan salah")
+        alert("Kata laluan salah");
 
     }
+}
+
+function startScan() {
+
+    let progress = 0
+    let bar = document.getElementById("scanBar")
+    let percent = document.getElementById("scanPercent")
+
+    let load_bar = document.getElementById("load_bar");
+    let imbas = document.getElementById("imbas");
+
+    load_bar.currentTime = 0;
+    load_bar.play();
+    imbas.play();
+
+    setTimeout(() => {
+        load_bar.pause();
+        load_bar.currentTime = 0;
+    }, 2500); // 4000ms = 4 saat
+
+    let success = document.getElementById("success");
+    success.currentTime = 0;
+    success.play();
+
+    setTimeout(() => {
+        success.pause();
+        success.currentTime = 0;
+    }, 4000);
+
+    setTimeout(() => {
+        document.getElementById("access").play();
+    }, 3000);
+
+    let interval = setInterval(() => {
+
+        progress++
+
+        bar.style.width = progress + "%"
+        percent.innerText = progress + "%"
+
+        if (progress >= 100) {
+
+            clearInterval(interval)
+            document.getElementById("first_bgm").pause()
+            document.getElementById("first_bgm").currentTime = 0
+
+            showScene("scene5")
+
+        }
+
+    }, 20)
+
+}
+
+function resetSystem() {
+
+    // berhenti semua audio
+    document.querySelectorAll("audio").forEach(a => {
+        a.pause();
+        a.currentTime = 0;
+    });
+
+    // reset progress bar utama
+    let bar = document.getElementById("progressBar")
+    let percent = document.getElementById("percent")
+
+    if (bar) bar.style.width = "0%"
+    if (percent) percent.innerText = "0%"
+
+    // reset scan bar
+    let scanBar = document.getElementById("scanBar")
+    let scanPercent = document.getElementById("scanPercent")
+
+    if (scanBar) scanBar.style.width = "0%"
+    if (scanPercent) scanPercent.innerText = "0%"
+
+    // kosongkan password
+    document.getElementById("password").value = ""
+
+    // hide semua scene
+    document.querySelectorAll(".scene").forEach(scene => {
+        scene.classList.remove("active")
+    })
+
+    // kembali ke start screen
+    document.getElementById("startScreen").style.display = "flex"
 
 }

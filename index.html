@@ -3,9 +3,39 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Sistem AI Wakaf</title>
+    <title>Sistem Gimik Himpunan Siswa</title>
 
     <style>
+        #startScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            /* gelap tapi transparent */
+            backdrop-filter: blur(4px);
+            /* effect blur belakang */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        #startScreen h1 {
+            color: cyan;
+            margin-bottom: 40px;
+        }
+
+        #startScreen button {
+            padding: 15px 40px;
+            font-size: 22px;
+            background: cyan;
+            border: none;
+            cursor: pointer;
+        }
+
         canvas {
             position: fixed;
             top: 0;
@@ -17,32 +47,56 @@
         }
 
         body {
+            overflow: hidden;
             background: black;
-            color: #00ffff;
+            color: #ffffff;
             font-family: monospace;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             text-align: center;
-            overflow: hidden;
+            font-size: 60px;
         }
 
-        body {
-            background: black;
-            color: #00ffff;
-            font-family: monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
+        .loader {
+            margin-top: 30px;
+            width: 70px;
+            height: 70px;
+            border: 4px solid rgba(0, 255, 255, 0.2);
+            border-top: 4px solid cyan;
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+            box-shadow: 0 0 15px cyan;
         }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Text glow animation */
 
         .scene {
             display: none;
-            font-size: 28px;
+            font-size: 48px;
             line-height: 1.6;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #00ffff;
+            }
+
+            to {
+                text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
+            }
         }
 
         .active {
@@ -63,48 +117,306 @@
             font-size: 18px;
             margin-top: 20px;
         }
+
+        .progress {
+            width: 500px;
+            height: 30px;
+            border: 2px solid cyan;
+            margin: 40px auto 20px;
+        }
+
+        #progressBar {
+            width: 0%;
+            height: 100%;
+            background: cyan;
+            box-shadow: 0 0 10px cyan;
+        }
+
+        #percent {
+            font-size: 48px;
+            color: cyan;
+        }
+
+        #scanBar {
+            width: 0%;
+            height: 100%;
+            background: #00ff9f;
+            box-shadow: 0 0 10px #00ff9f;
+        }
+
+        #scanPercent {
+            font-size: 18px;
+            color: #00ff9f;
+        }
+
+        #progressBar2 {
+            width: 100%;
+            height: 100%;
+            background: cyan;
+            box-shadow: 0 0 10px cyan;
+        }
+
+        .access-box {
+            border: 3px solid #00ff9f;
+            padding: 60px 100px;
+            box-shadow: 0 0 30px #00ff9f;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .checkmark {
+            font-size: 120px;
+            color: #00ff9f;
+            margin-bottom: 10px;
+            animation: pop 0.6s ease;
+        }
+
+        .access-box h1 {
+            color: #00ff9f;
+            font-size: 40px;
+            margin: 10px 0;
+        }
+
+        .access-box p {
+            color: #7dffce;
+            font-size: 18px;
+        }
+
+        @keyframes glowBox {
+            from {
+                box-shadow: 0 0 10px #00ff9f;
+            }
+
+            to {
+                box-shadow: 0 0 30px #00ff9f;
+            }
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .backBtn {
+            margin-top: 40px;
+            padding: 12px 30px;
+            font-size: 18px;
+            background: #00ff9f;
+            border: none;
+            color: black;
+            cursor: pointer;
+            box-shadow: 0 0 10px #00ff9f;
+            transition: 0.3s;
+        }
+
+        .backBtn:hover {
+            box-shadow: 0 0 25px #00ff9f;
+            transform: scale(1.05);
+        }
+
+        .startBtn {
+            margin-top: 30px;
+            padding: 15px 50px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffffff;
+            background: transparent;
+            border: 2px solid #00ffff;
+            cursor: pointer;
+            letter-spacing: 3px;
+            transition: 0.3s;
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        /* Hover effect */
+        .startBtn:hover {
+            background: #00ffff;
+            color: rgb(255, 255, 255);
+            box-shadow:
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 40px #00ffff;
+            transform: scale(1.08);
+        }
+
+        /* Click effect */
+        .startBtn:active {
+            transform: scale(0.95);
+        }
+
+        .loginBox {
+            border: 3px solid cyan;
+            padding: 60px 100px;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 25px cyan;
+        }
+
+        .lockIcon {
+            font-size: 68px;
+            margin-bottom: 10px;
+        }
+
+        .loginBox h2 {
+            color: cyan;
+            margin: 10px 0;
+        }
+
+        .loginBox p {
+            color: #9fffff;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .loginBox input {
+            width: 320px;
+            padding: 15px;
+            font-size: 26px;
+        }
+
+        .enterBtn {
+            margin-top: 15px;
+            padding: 10px 30px;
+            font-size: 18px;
+            background: transparent;
+            border: 2px solid cyan;
+            color: cyan;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .enterBtn:hover {
+            background: cyan;
+            color: black;
+            box-shadow: 0 0 20px cyan;
+        }
+
+        @keyframes glowBox {
+            from {
+                box-shadow: 0 0 10px cyan;
+            }
+
+            to {
+                box-shadow: 0 0 30px cyan;
+            }
+        }
+
+        #scene6 h1 {
+            font-size: 80px;
+        }
+
+        #scene6 h2 {
+            font-size: 55px;
+        }
+
+        #scene6 p {
+            font-size: 30px;
+        }
+
+        #startScreen h1 {
+            font-size: 60px;
+        }
     </style>
 </head>
 
 <body>
     <canvas id="matrix"></canvas>
+    <div id="startScreen">
+
+        <h1>PROGRAM HIMPUNAN SISWA DUN WAKAF MEMPELAM 2026</h1>
+
+        <button class="startBtn" onclick="startSystem()">MULA</button>
+
+    </div>
+
     <div id="scene1" class="scene active">
         MEMULAKAN SISTEM...<br>
         MENYAMBUNG KE PANGKALAN DATA...
+
+        <div class="progress">
+            <div id="progressBar"></div>
+        </div>
+
+        <div id="percent">0%</div>
     </div>
 
     <div id="scene2" class="scene">
-        MEMUATKAN DATA GENERASI<br>
-        WAKAF MEMPELAM...
+        SAMBUNGAN BERJAYA<br>
+
+        <div class="progress">
+            <div id="progressBar2"></div>
+        </div>
+
+        <div id="percent2">100%</div>
     </div>
 
     <div id="scene3" class="scene">
-        SISTEM DIKUNCI 🔒<br><br>
-        SILA MASUKKAN KATA LALUAN
-        <br><br>
-        <input type="password" id="password">
-        <br>
-        <button onclick="checkPassword()">ENTER</button>
-    </div>
 
+        <div class="loginBox">
+
+            <div class="lockIcon">🔒</div>
+
+            <h2>SISTEM DIKUNCI</h2>
+
+            <p>SILA MASUKKAN KATA LALUAN</p>
+
+            <input type="password" id="password" placeholder="KATA LALUAN">
+
+            <br>
+
+            <button class="enterBtn" onclick="checkPassword()">ENTER</button>
+
+        </div>
+
+    </div>
     <div id="scene4" class="scene">
         MENGIMBAS IDENTITI...
+
+        <div class="progress">
+            <div id="scanBar"></div>
+        </div>
+
+        <div id="scanPercent">0%</div>
     </div>
 
     <div id="scene5" class="scene">
-        AKSES DILULUSKAN
+
+        <div class="access-box">
+
+            <div class="checkmark">✔</div>
+
+            <h1>AKSES DILULUSKAN</h1>
+
+            <p>SISTEM KESELAMATAN DISAHKAN</p>
+
+        </div>
+
     </div>
 
     <div id="scene6" class="scene">
         <h1>HIMPUNAN SISWA</h1>
         <h2>DUN WAKAF MEMPELAM</h2>
         <p>MEMBANGUN GENERASI • MEMPERKASA KOMUNITI</p>
+
+        <button onclick="location.reload()" class="backBtn">KEMBALI</button>
     </div>
 
-    <audio id="voice" src="welcome-ai.mp3"></audio>
+    <audio id="imbas" src="mengimbas_identiti.wav" preload="auto"></audio>
+    <audio id="access" src="akses_diluluskan.wav" preload="auto"></audio>
+    <audio id="sambungan" src="sambugan_berjaya.wav" preload="auto"></audio>
+    <audio id="success" src="success.mp3" preload="auto"></audio>
+    <audio id="load_bar" src="load_bar.mp3" preload="auto"></audio>
+    <audio id="load_system" src="load_system.wav" preload="auto"></audio>
+    <audio id="first_bgm" src="first_bg.mp3" loop preload="auto"></audio>
+    <audio id="bgm" src="background.mp3" loop preload="auto"></audio>
+    <audio id="voice" src="welcome.wav" preload="auto"></audio>
+    <audio id="welcome_load" src="welcome_load.wav" preload="auto"></audio>
 
     <script src="script.js"></script>
-
 </body>
+
 
 </html>
