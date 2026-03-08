@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI System Activation</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #020617, #000000);
+            font-family: 'Courier New', monospace;
+            color: #00ffff;
+        }
+
+        .container {
+            text-align: center;
+            border: 2px solid #00ffff;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px #00ffff;
+            width: 600px;
+        }
+
+        h1 {
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+
+        .system {
+            font-size: 14px;
+            color: #7df9ff;
+            margin-bottom: 20px;
+        }
+
+        input {
+            background: black;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            padding: 12px;
+            font-size: 20px;
+            width: 250px;
+            text-align: center;
+        }
+
+        button {
+            margin-left: 10px;
+            padding: 12px 20px;
+            font-size: 18px;
+            background: #00ffff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #00cccc;
+        }
+
+        .result {
+            margin-top: 30px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>AI SYSTEM INITIALIZING</h1>
+
+        <div class="system">
+            CONNECTING DATABASE... <br>
+            SCANNING GENERATION DATA... <br>
+            SYSTEM LOCKED 🔒
+        </div>
+
+        <p>ENTER ACCESS PASSWORD</p>
+
+        <input type="password" id="password" placeholder="ACCESS CODE">
+        <button onclick="checkPassword()">ENTER</button>
+
+        <div class="result" id="result"></div>
+
+    </div>
+
+    <script>
+
+        function checkPassword() {
+
+            let pass = document.getElementById("password").value;
+            let result = document.getElementById("result");
+
+            if (pass === "WAKAF2026") {
+
+                result.innerHTML = "ACCESS GRANTED <br><br> SYSTEM ACTIVATED";
+
+                setTimeout(function () {
+
+                    document.body.innerHTML = `
+<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:black;color:#00ffff;font-family:Courier New;text-align:center">
+<div>
+<h1 style="font-size:60px;">HIMPUNAN SISWA</h1>
+<h2 style="font-size:40px;">DUN WAKAF MEMPELAM</h2>
+<p style="font-size:25px;margin-top:30px;">MEMBANGUN GENERASI • MEMPERKASA KOMUNITI</p>
+</div>
+</div>
+`
+
+                }, 2000)
+
+            } else {
+
+                result.innerHTML = "ACCESS DENIED";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
