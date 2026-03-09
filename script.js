@@ -266,8 +266,15 @@ function hackerReveal() {
 function showPoster() {
 
     document.getElementById("hackerTerminal").style.display = "none";
-    document.getElementById("posterImage").style.display = "block";
-    document.querySelector(".posterBack").style.display = "block";
+
+    let poster = document.getElementById("posterImage");
+    let backBtn = document.querySelector(".posterBack");
+    let muteBtn = document.getElementById("muteBtn");
+
+    poster.style.display = "block";
+
+    backBtn.style.display = "block";
+    muteBtn.style.display = "block";
 
 }
 
