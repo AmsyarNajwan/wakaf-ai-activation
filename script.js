@@ -125,18 +125,18 @@ function checkPassword() {
         showScene("scene4");
         startScan()
 
-        setTimeout(() => {
-            showScene("scene5");
-        }, 2000);
 
         setTimeout(() => {
 
             showScene("scene6");
-            document.getElementById("bgm").play();
+            hackerReveal();
+            setTimeout(() => {
+                document.getElementById("bgm").play();
+            }, 3000); // 3000 ms = 3 saat
             let load = document.getElementById("welcome_load");
             load.play();
 
-        }, 6000);
+        }, 8000);
 
     } else {
 
@@ -163,10 +163,6 @@ function startScan() {
         load_bar.currentTime = 0;
     }, 2500); // 4000ms = 4 saat
 
-    let success = document.getElementById("success");
-    success.currentTime = 0;
-    success.play();
-
     setTimeout(() => {
         success.pause();
         success.currentTime = 0;
@@ -174,7 +170,7 @@ function startScan() {
 
     setTimeout(() => {
         document.getElementById("access").play();
-    }, 3000);
+    }, 5000);
 
     let interval = setInterval(() => {
 
@@ -189,7 +185,9 @@ function startScan() {
             document.getElementById("first_bgm").pause()
             document.getElementById("first_bgm").currentTime = 0
 
-            showScene("scene5")
+            setTimeout(() => {
+                showScene("scene5")
+            }, 3000); // tunggu 3 saat
 
         }
 
@@ -229,5 +227,68 @@ function resetSystem() {
 
     // kembali ke start screen
     document.getElementById("startScreen").style.display = "flex"
+
+}
+
+function hackerReveal() {
+
+    const text = [
+        "DECRYPTING DATA...",
+        "ACCESSING SYSTEM FILES...",
+        "LOADING EVENT POSTER...",
+        "INITIALIZING DISPLAY..."
+    ];
+
+    let index = 0;
+    let terminal = document.getElementById("hackText");
+
+    function nextLine() {
+
+        if (index < text.length) {
+
+            terminal.innerText = text[index];
+            index++;
+
+            setTimeout(nextLine, 1000);
+
+        } else {
+
+            showPoster();
+
+        }
+
+    }
+
+    nextLine();
+
+}
+
+function showPoster() {
+
+    document.getElementById("hackerTerminal").style.display = "none";
+    document.getElementById("posterImage").style.display = "block";
+    document.querySelector(".posterBack").style.display = "block";
+
+}
+
+let muted = false;
+
+function toggleMute() {
+
+    let audios = document.querySelectorAll("audio");
+
+    muted = !muted;
+
+    audios.forEach(audio => {
+        audio.muted = muted;
+    });
+
+    let btn = document.getElementById("muteBtn");
+
+    if (muted) {
+        btn.innerText = "🔇 UNMUTE";
+    } else {
+        btn.innerText = "🔊 MUTE";
+    }
 
 }

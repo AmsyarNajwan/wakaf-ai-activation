@@ -2,6 +2,9 @@
 <html lang="ms">
 
 <head>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Poppins:wght@300;500&display=swap"
+        rel="stylesheet">
     <meta charset="UTF-8">
     <title>Sistem Gimik Himpunan Siswa</title>
 
@@ -12,15 +15,76 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            /* gelap tapi transparent */
-            backdrop-filter: blur(4px);
-            /* effect blur belakang */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 10;
+            overflow: hidden;
+        }
+
+        /* background poster */
+        #startScreen::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("poster.png") center/cover no-repeat;
+
+            filter: grayscale(100%) blur(8px) brightness(0.35) contrast(120%);
+            transform: scale(1.1);
+
+            z-index: -1;
+        }
+
+        #startScreen::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            background: url("poster.png") center/cover no-repeat;
+
+            filter: grayscale(100%) contrast(200%) brightness(0.6);
+
+            mix-blend-mode: screen;
+            opacity: 0.1;
+
+            animation: glitchBg 3s infinite;
+
+            z-index: -1;
+        }
+
+        @keyframes glitchBg {
+
+            0% {
+                transform: translate(0, 0) scale(1.1);
+            }
+
+            20% {
+                transform: translate(-5px, 3px) scale(1.1);
+            }
+
+            40% {
+                transform: translate(5px, -3px) scale(1.1);
+            }
+
+            60% {
+                transform: translate(-3px, 2px) scale(1.1);
+            }
+
+            80% {
+                transform: translate(3px, -2px) scale(1.1);
+            }
+
+            100% {
+                transform: translate(0, 0) scale(1.1);
+            }
+
         }
 
         #startScreen h1 {
@@ -47,6 +111,7 @@
         }
 
         body {
+            font-family: 'Poppins';
             overflow: hidden;
             background: black;
             color: #ffffff;
@@ -221,7 +286,7 @@
         .startBtn {
             margin-top: 30px;
             padding: 15px 50px;
-            font-size: 22px;
+            font-size: 48px;
             font-weight: bold;
             color: #ffffff;
             background: transparent;
@@ -229,12 +294,13 @@
             cursor: pointer;
             letter-spacing: 3px;
             transition: 0.3s;
-            box-shadow: 0 0 10px #00ffff;
+            box-shadow: 0 0 10px #ffffff;
+            -webkit-text-stroke: 1px #000000;
         }
 
         /* Hover effect */
         .startBtn:hover {
-            background: #00ffff;
+            background: #ffffff;
             color: rgb(255, 255, 255);
             box-shadow:
                 0 0 10px #00ffff,
@@ -319,6 +385,104 @@
         #startScreen h1 {
             font-size: 60px;
         }
+
+        .neonTitle {
+            font-size: 70px;
+            color: #00ffff;
+            text-align: center;
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                text-shadow: 0 0 10px #00ffff;
+            }
+
+            to {
+                text-shadow:
+                    0 0 20px #00ffff,
+                    0 0 40px #00ffff,
+                    0 0 80px #00ffff;
+            }
+        }
+
+        .titleContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mainLogo {
+            width: 360px;
+            margin-bottom: 25px;
+        }
+
+        #hackerTerminal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            font-family: monospace;
+            color: #00ff9f;
+            text-shadow: 0 0 10px #00ff9f;
+            z-index: 3;
+        }
+
+        .posterFull {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            display: none;
+            z-index: 1;
+        }
+
+        .posterBack {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            z-index: 5;
+            display: none;
+        }
+
+        .muteBtn {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            padding: 12px 25px;
+            font-size: 18px;
+            background: #ff4444;
+            border: none;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 10px #ff4444;
+            transition: 0.3s;
+            z-index: 6;
+        }
+
+        .muteBtn:hover {
+            box-shadow: 0 0 25px #ff4444;
+            transform: scale(1.05);
+        }
+
+        .titleMain {
+            font-size: 64px;
+            font-weight: 600;
+            letter-spacing: 6px;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .titleSub {
+            font-size: 50px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #d0d0d0;
+        }
     </style>
 </head>
 
@@ -326,7 +490,19 @@
     <canvas id="matrix"></canvas>
     <div id="startScreen">
 
-        <h1>PROGRAM HIMPUNAN SISWA DUN WAKAF MEMPELAM 2026</h1>
+        <div class="titleContainer">
+
+            <img src="main_logo.png" class="mainLogo">
+
+            <h2 class="titleSub">
+                PROGRAM HIMPUNAN SISWA
+            </h2>
+
+            <h2 class="titleSub">
+                DUN WAKAF MEMPELAM 2026
+            </h2>
+
+        </div>
 
         <button class="startBtn" onclick="startSystem()">MULA</button>
 
@@ -361,7 +537,7 @@
 
             <h2>SISTEM DIKUNCI</h2>
 
-            <p>SILA MASUKKAN KATA LALUAN</p>
+            <p style="font-size: 36px;">SILA MASUKKAN KATA LALUAN</p>
 
             <input type="password" id="password" placeholder="KATA LALUAN">
 
@@ -388,7 +564,7 @@
 
             <div class="checkmark">✔</div>
 
-            <h1>AKSES DILULUSKAN</h1>
+            <h1>ACCESS GRANTED</h1>
 
             <p>SISTEM KESELAMATAN DISAHKAN</p>
 
@@ -397,17 +573,26 @@
     </div>
 
     <div id="scene6" class="scene">
-        <h1>HIMPUNAN SISWA</h1>
-        <h2>DUN WAKAF MEMPELAM</h2>
-        <p>MEMBANGUN GENERASI • MEMPERKASA KOMUNITI</p>
 
-        <button onclick="location.reload()" class="backBtn">KEMBALI</button>
+        <div id="hackerTerminal">
+            <p id="hackText"></p>
+        </div>
+
+        <img src="poster.png" class="posterFull" id="posterImage">
+
+        <button onclick="toggleMute()" class="muteBtn" id="muteBtn">
+            🔊 MUTE
+        </button>
+
+        <button onclick="location.reload()" class="backBtn posterBack">
+            KEMBALI
+        </button>
+
     </div>
 
     <audio id="imbas" src="mengimbas_identiti.wav" preload="auto"></audio>
     <audio id="access" src="akses_diluluskan.wav" preload="auto"></audio>
     <audio id="sambungan" src="sambugan_berjaya.wav" preload="auto"></audio>
-    <audio id="success" src="success.mp3" preload="auto"></audio>
     <audio id="load_bar" src="load_bar.mp3" preload="auto"></audio>
     <audio id="load_system" src="load_system.wav" preload="auto"></audio>
     <audio id="first_bgm" src="first_bg.mp3" loop preload="auto"></audio>
